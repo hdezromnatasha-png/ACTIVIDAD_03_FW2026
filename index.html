@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Catálogo de Planetas - Star Wars</title>
+    <meta name="description" content="Catálogo de planetas Star Wars con Vue">
+    <meta name="keywords" content="Vue, Star Wars, API">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body class="bg-dark text-white">
+
+    <header class="text-center p-4">
+        <img src="img/titulo.png" alt="Titulo" class="titulo-img">
+        <h1>Catálogo de Planetas</h1>
+    </header>
+
+    <section class="container text-center" id="contenedor">
+        <!-- FILTROS -->
+        <div class="mb-4">
+            <button class="btn btn-primary m-1" @click="filtrarClima('Todos')">Todos</button>
+            <button class="btn btn-warning m-1" @click="filtrarClima('arid')">Arid</button>
+            <button class="btn btn-info m-1" @click="filtrarClima('frozen')">Frozen</button>
+            <button class="btn btn-success m-1" @click="filtrarClima('temperate')">Temperate</button>
+        </div>
+
+        <!-- BARRA PROGRESO BOOTSTRAP -->
+        <div class="progress mb-4" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar" :style="{width: porcentaje + '%'}">
+                {{ porcentaje }}%
+            </div>
+        </div>
+
+        <!-- CARDS -->
+        <div class="row justify-content-center">
+            <div class="col-md-3 m-3" v-for="(planeta, index) in planetasFiltrados" :key="planeta.name">
+                <div class="card text-dark h-100">
+                    <div class="card-body">
+                        <h5 class="card-title" v-text="planeta.name"></h5>
+                        <p class="card-text">
+                            Clima: <span v-text="planeta.climate"></span>
+                        </p>
+                        <p class="card-text">
+                            Población: <span v-text="planeta.population"></span>
+                        </p>
+
+                        <button class="btn btn-primary m-1" @click="mostrarDetalles(planeta)">
+                            Ver más
+                        </button>
+
+                        <button class="btn btn-danger m-1" @click="eliminar(index)">
+                            Eliminar
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL -->
+        <div v-if="planetaSeleccionado" class="modal-fondo">
+            <div class="modal-contenido text-dark">
+                <h2 v-text="planetaSeleccionado.name"></h2>
+                <hr>
+                <p>
+                    <strong>Clima:</strong>
+                    <span v-text="planetaSeleccionado.climate"></span>
+                </p>
+                <p>
+                    <strong>Terreno:</strong>
+                    <span v-text="planetaSeleccionado.terrain"></span>
+                </p>
+                <p>
+                    <strong>Gravedad:</strong>
+                    <span v-text="planetaSeleccionado.gravity"></span>
+                </p>
+                <p>
+                    <strong>Población:</strong>
+                    <span v-text="planetaSeleccionado.population"></span>
+                </p>
+
+                <button class="btn btn-danger mt-3" @click="cerrarModal">
+                    Cerrar
+                </button>
+
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Natalia Shaiel Hernández Rómulo</p>
+        <p>24001790</p>
+        <p>LEVN504</p>
+        <p>ACTIVIDAD_03_FW2026_CONSUMO DE API FILTROS, LOCALSTORAGE, DIRECTIVAS</p>
+        <p>Viernes, 20 de febrero de 2026</p>
+        <p>Frameworks para Desarrollo Web</p>
+        <p>Maestra María De Jesús Sánchez Solís</p>
+        <p><b>Universidad Ternológica de León</b></p>
+    </footer>
+
+    <script src="js/vue3.js"></script>
+    <script src="js/axios.min.js"></script>
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>
